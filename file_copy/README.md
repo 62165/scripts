@@ -59,13 +59,15 @@ and exit without doing anything.
 - The first column is the folder name — it must match the folder name under
   `--src` exactly.
 - Any other columns are ignored.
-- If a folder name contains a comma, wrap it in double quotes.
+- For consistency, always quote every entry in the CSV.
 
 ```csv
-Name
-Folder One
-Folder Two
+"Name"
+"Folder One"
+"Folder Two"
+"Folder Three"
 "Folder, With A Comma"
+"Folder One (2020)"
 ```
 
 ## Output
