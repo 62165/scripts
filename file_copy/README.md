@@ -66,8 +66,9 @@ and exit without doing anything.
 "Folder One"
 "Folder Two"
 "Folder Three"
-"Folder, With A Comma"
-"Folder One (2020)"
+"Folder Four (2020)"
+"Folder F.I.V.E"
+"Folder Six, With A Comma"
 ```
 
 ## Output
