@@ -25,15 +25,15 @@ Both are already installed on most Linux systems, including Unraid.
 ## Usage
 
 ```bash
-./copy_folders_from_csv.sh <list.csv> --src <path> --dst <path> [--dry-run]
+./copy_folders_from_csv.sh <copy_list.csv> --src <path> --dst <path> [--dry-run]
 ```
 
-| Argument       | Required? | Description                                             |
-|----------------|-----------|-----------------------------------------------------------|
-| `<list.csv>`   | Yes       | Path to the CSV file listing the folders to copy         |
-| `--src <path>` | Yes       | Folder that contains the source folders                  |
-| `--dst <path>` | Yes       | Folder to copy the folders into                           |
-| `--dry-run`    | No        | Preview only — shows what would happen, copies nothing    |
+| Argument           | Required? | Description                                             |
+|--------------------|-----------|-----------------------------------------------------------|
+| `<copy_list.csv>`  | Yes       | Path to the CSV file listing the folders to copy         |
+| `--src <path>`     | Yes       | Folder that contains the source folders                  |
+| `--dst <path>`     | Yes       | Folder to copy the folders into                           |
+| `--dry-run`        | No        | Preview only — shows what would happen, copies nothing    |
 
 Arguments can be given in any order. There are no hardcoded paths in the
 script — if you forget `--src` or `--dst`, it will print usage instructions
@@ -43,12 +43,12 @@ and exit without doing anything.
 
 ```bash
 # Always preview first
-./copy_folders_from_csv.sh list.csv --dry-run \
+./copy_folders_from_csv.sh copy_list.csv --dry-run \
     --src "/path/to/source" \
     --dst "/path/to/destination"
 
 # Then run for real
-./copy_folders_from_csv.sh list.csv \
+./copy_folders_from_csv.sh copy_list.csv \
     --src "/path/to/source" \
     --dst "/path/to/destination"
 ```
@@ -97,7 +97,7 @@ If you're connecting over SSH and want the copy to keep running after you
 disconnect, use `nohup`:
 
 ```bash
-nohup ./copy_folders_from_csv.sh list.csv --src "/path/to/source" --dst "/path/to/destination" &
+nohup ./copy_folders_from_csv.sh copy_list.csv --src "/path/to/source" --dst "/path/to/destination" &
 ```
 
 Check progress anytime with:
