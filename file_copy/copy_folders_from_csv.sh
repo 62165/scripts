@@ -1,54 +1,4 @@
 #!/bin/bash
-#
-# copy_folders_from_csv.sh
-#
-# Copies a list of folders from a source directory to a destination
-# directory. The list of folder names comes from a CSV file.
-#
-# CSV FORMAT:
-#   First line is a header (skipped).
-#   First column is the folder name, matching the folder name exactly.
-#   For consistency, quote every entry in the CSV. Names containing a comma
-#   should also be wrapped in double quotes, e.g.:
-#     Name
-#     "Folder One"
-#     "Folder Two"
-#     "Folder, With Comma"
-#
-# ============================================================================
-# HOW TO USE THIS (read this if you're not the original author)
-# ============================================================================
-# There are NO hardcoded folder paths in this script — --src and --dst are
-# both REQUIRED every time you run it. Nothing runs without them.
-#
-# 1. Build a CSV of the folder names you want copied (see CSV FORMAT above).
-#    These must match the exact folder names under your --src path.
-#
-# 2. ALWAYS do a --dry-run first. It touches nothing — it only shows you
-#    what WOULD be copied, so you can confirm the paths and folder list are
-#    right before anything actually moves.
-#
-# 3. Once the dry run looks right, run it for real (same command, drop
-#    --dry-run).
-#
-# EXAMPLE:
-#   ./copy_folders_from_csv.sh list.csv --dry-run \
-#       --src "/path/to/source" \
-#       --dst "/path/to/destination"
-#
-#   ./copy_folders_from_csv.sh list.csv \
-#       --src "/path/to/source" \
-#       --dst "/path/to/destination"
-#
-#   (the csv path, --dry-run, --src, and --dst can be given in any order)
-# ============================================================================
-#
-# Uses rsync so it's safe to re-run (skips files already copied/unchanged)
-# and can be resumed if interrupted. It only ever COPIES — it never deletes
-# anything from the source folder.
-#
-# A log of everything done is written to copy_folders_from_csv.log in the
-# same directory as this script.
 
 set -uo pipefail
 
@@ -83,7 +33,7 @@ done
 if [[ -z "$CSV_FILE" || -z "$SRC_ROOT" || -z "$DST_ROOT" ]]; then
     echo "Usage: $0 <list.csv> --src <path> --dst <path> [--dry-run]"
     echo ""
-    echo "  <list.csv>    CSV of folder names to copy (see script header)"
+    echo "  <list.csv>    CSV of folder names to copy"
     echo "  --src <path>  REQUIRED. Folder containing the source folders"
     echo "  --dst <path>  REQUIRED. Folder to copy the folders into"
     echo "  --dry-run     Optional. Preview only, copies nothing"
@@ -111,10 +61,7 @@ if [[ ! -d "$DST_ROOT" ]]; then
     exit 1
 fi
 
-# Read the CSV into an array, skipping the header row, and handling a
-# quoted first field (so names containing commas work correctly).
-# Pure-bash parsing (no awk/gawk dependency, since some systems only have
-# mawk which doesn't support the FPAT feature this would otherwise need).
+# Read the CSV into an array, skipping the header row and handling quoted fields.
 ITEMS=()
 first_line=true
 while IFS= read -r line || [[ -n "$line" ]]; do
