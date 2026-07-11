@@ -2,8 +2,16 @@
 
 This folder contains scripts.
 
-## file_copy
+## Scripts
 
-The file_copy folder contains scripts for copying files.
+| Folder | Description |
+|--------|-------------|
+| `file_copy` | Copies folders from a source location to a destination location using a CSV list of folder names. |
 
-It includes a bash script that copies folders from a CSV list and a sample CSV file to help you get started.
+### file_copy
+
+```text
+file_copy
+```
+
+This folder includes a bash script for copying folders from a CSV file, along with a sample CSV file to help you get started.
