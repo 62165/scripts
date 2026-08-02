@@ -1,0 +1,10 @@
+# Local Tautulli config
+tautulli_scripts/.tatulli_config.sh
+
+# macOS and editor noise
+.DS_Store
+
+# Common local script artifacts
+*.log
+*.tmp
+*.bak
