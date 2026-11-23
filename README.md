@@ -8,6 +8,7 @@ The repo contains multiple independent tools rather than a single application. E
 ## Repository layout
 - `file_copy/` — copies folder trees from a source root to a destination root using a CSV list
 - `tautulli_scripts/` — queries Tautulli and summarizes encryption status for users and clients
+- `unifi/` — UniFi network configuration snapshot and sanitized public export utility
 - `updateubuntu/` — Ansible playbook for Debian/Ubuntu package upgrades and reboot handling
 - `README.md` — repository overview and usage guide
 
@@ -17,6 +18,9 @@ Copies named folders from a source directory into a target directory based on an
 
 ### tautulli_scripts
 Fetches Tautulli API data and groups results by encryption status: encrypted, unencrypted, or unknown. This is useful for identifying clients that may not be using secure streaming connections.
+
+### unifi
+Fetches configuration snapshots from the UniFi Controller API (networks, WLANs, firewall rules, active devices), writes a local raw JSON export, and produces a sanitized, public-safe JSON summary masking internal IPs and domains.
 
 ### updateubuntu
 Applies a system update and distribution upgrade across Debian/Ubuntu hosts, then reboots if the kernel or package state requires it.

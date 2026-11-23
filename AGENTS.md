@@ -13,9 +13,10 @@ Primary reference:
 - `../environment-docs/docs/server-documentation.md`
 
 ## Repository overview
-This repo contains three main areas:
+This repo contains four main areas:
 - `file_copy/`: batch copy utility for folders listed in a CSV
 - `tautulli_scripts/`: scripts for querying Tautulli and summarizing encryption status
+- `unifi/`: UniFi network snapshot and sanitized summary export utility
 - `updateubuntu/`: Ansible playbook for Debian/Ubuntu updates and reboot logic
 
 ## How the project works
@@ -27,7 +28,10 @@ The script reads a CSV list of folder names and copies each source folder into a
 ### 2) tautulli_scripts
 The script calls a Tautulli API, reads user and history data, and classifies entries as encrypted, unencrypted, or unknown based on common security fields.
 
-### 3) updateubuntu
+### 3) unifi
+The script `unifi_network_snapshot.py` connects to the UniFi controller API, dumps raw network configuration (networks, WLANs, firewall rules, devices) locally, and creates a sanitized summary for documentation.
+
+### 4) updateubuntu
 The Ansible playbook updates package caches, performs a distribution upgrade, checks whether a reboot is required, and reboots the host if needed.
 
 ## Conventions for all scripts
@@ -41,6 +45,7 @@ The Ansible playbook updates package caches, performs a distribution upgrade, ch
 - `file_copy/copy_folders_from_csv.sh`: batch folder copy job
 - `file_copy/copy_list.csv`: example CSV input list
 - `tautulli_scripts/tatulli_encryption_report.sh`: API report script
+- `unifi/unifi_network_snapshot.py`: UniFi configuration exporter and doc sanitizer
 - `updateubuntu/updateubuntu.yml`: server update automation
 - `README.md`: overview and usage documents for the collection
 
@@ -49,6 +54,20 @@ The Ansible playbook updates package caches, performs a distribution upgrade, ch
 - If a script reads configuration, prefer a local file in the same directory with obvious names such as `.tatulli_config.sh`.
 - Keep arguments explicit and documented in `usage` output or README sections.
 - Maintain compatibility with Linux shells and standard package managers.
+
+## Adding new directories and scripts
+When creating a new tool or directory in this repository:
+1. **Self-contained directory**: Create a dedicated directory named for the tool/service (e.g. `unifi/`, `file_copy/`).
+2. **Dedicated README.md**: Provide a clear `README.md` inside the directory covering:
+   - Purpose and high-level description
+   - Requirements / dependencies
+   - Configuration (environment variables or config files with `.example` templates)
+   - Usage syntax and arguments table
+   - Safety notes (handling sensitive data, idempotency, dry-run options)
+3. **Update root documentation**:
+   - Add the new folder and summary to `README.md` under **Repository layout** and **Tool summaries**.
+   - Add the script responsibilities and operational details to `AGENTS.md`.
+4. **Security & Git hygiene**: Ensure any local credentials, state files, or raw exports are added to `.gitignore`.
 
 ## Validation
 For each script, validate against its intended runtime environment:
